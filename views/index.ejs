@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <h2>Welcome to my blog</h2>
+    <p><a href="/blog/create-form">Add new post</a></p>
+
+    <% if(blogs.length != 0) { %>
+    <table border="1">
+        <tr>
+            <th>No.</th>
+            <th>Title</th>
+            <th>Detail</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>Delete with button</th>
+        </tr>
+
+        <%  var i = 1;
+                blogs.forEach((post) => {
+            %>
+        <tr>
+            <td><%= i %></td>
+            <td><%= post.title %></td>
+            <td><%= post.detail %></td>
+            <td><a href="/blog/edit/<%= post.id %>">Edit</a></td>
+            <td><a href="/blog/delete/<%= post.id %>">Delete</a></td>
+            <td><button class="btn-delete" type="button" data-id="<%= post.id %>">Delete</button></td>
+        </tr>
+        <%  i++; }) %>
+    </table>
+    <% } else { %>
+    <p>No blog post</p>
+    <% } %>
+
+    <script>
+        const btnDelete = document.querySelectorAll(".btn-delete");
+        btnDelete.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                // alert(btn.dataset.id);
+                const url = "/blog/delete/" + btn.dataset.id;
+                fetch(url, {
+                    method: "DELETE"
+                })
+                .then((response) => response.json())
+                .then((data) => window.location.replace(data.url))
+                .catch(err => alert(err));
+            });
+        });
+    </script>
+</body>
+
+</html>

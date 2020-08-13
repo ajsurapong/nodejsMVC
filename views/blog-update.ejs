@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Update a post</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <p><a href="/">Home</a></p>
+  
+  <h2>Update a blog post</h2>
+  <form action="/blog/update/<%= blog.id %>" method="POST">
+    <label for="title">Title</label><br>
+    <input type="text" placeholder="Title" name="title" required value="<%= blog.title %>">
+    <br><br>
+    <label for="detail">Detail</label><br>
+    <textarea placeholder="Detail" name="detail" required><%= blog.detail %></textarea>
+    <br><br>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+
+</html>
